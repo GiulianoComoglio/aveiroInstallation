@@ -10,6 +10,8 @@ const stopButton = document.getElementById("stopButton");
 const audioElement = document.getElementById("audio");
 const htmlTimer = document.getElementById("timer");
 
+console.log(startButton, stopButton, audioElement, htmlTimer);
+
 let recorder = null;
 let audioChunks = [];
 let timerInterval = null;
