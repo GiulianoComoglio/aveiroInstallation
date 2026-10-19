@@ -16,6 +16,7 @@ let recorder = null;
 let audioChunks = [];
 let timerInterval = null;
 let stopTimeout = null;
+let playbackAudioContext = null;
 
 function setupRecorder(stream) {
   recorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
@@ -35,6 +36,7 @@ function setupRecorder(stream) {
 
     const audioBlob = new Blob(audioChunks, { type: recorder.mimeType });
     audioElement.src = URL.createObjectURL(audioBlob);
+    
     audioChunks = [];
   };
 
@@ -55,6 +57,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
 startButton.addEventListener("click", () => {
   if (!recorder || recorder.state !== "inactive") return;
+
+  setupPlaybackReverb();
+  if (playbackAudioContext?.state === "suspended") playbackAudioContext.resume();
 
   audioChunks = [];
   recorder.start();
