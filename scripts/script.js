@@ -26,7 +26,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
 const TIME_LIMIT = 15000; // 15 seconds
 
-const recorder = new MediaRecorder(await navigator.mediaDevices.getUserMedia({ audio: true }));
+const recorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
 
 recorder.onstart = (e) => {
   console.log("recorder started");
