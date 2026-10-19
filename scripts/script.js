@@ -30,6 +30,7 @@ recorder.onstart = (e) => {
 
 const startButton = document.getElementById("startButton");
 const stopButton = document.getElementById("stopButton");
+const audioElement = document.getElementById("audio");
 
 startButton.addEventListener("click", () => {
   recorder.start();
@@ -41,3 +42,17 @@ startButton.addEventListener("click", () => {
 stopButton.addEventListener("click", () => {
   recorder.stop();
 });
+
+recorder.onstop = (e) => {
+  console.log("recorder stopped");
+  const audioChunks = [];
+  recorder.ondataavailable = (e) => {
+    audioChunks.push(e.data);
+  };
+
+  const audioBlob = new Blob(audioChunks, { type: "audio/mp3" });
+  const audioUrl = URL.createObjectURL(audioBlob);
+  const audio = new Audio(audioUrl);
+  audio.play();
+}; 
+
