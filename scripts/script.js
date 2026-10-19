@@ -35,9 +35,17 @@ recorder.onstart = (e) => {
 const startButton = document.getElementById("startButton");
 const stopButton = document.getElementById("stopButton");
 const audioElement = document.getElementById("audio");
+const htmlTimer = document.getElementById("timer");
 
 startButton.addEventListener("click", () => {
   recorder.start();
+  setInterval(() => {
+    const elapsedTime = Math.floor(recorder.stream.getTracks()[0].getSettings().elapsedTime / 1000);
+    const minutes = String(Math.floor(elapsedTime / 60)).padStart(2, "0");
+    const seconds = String(elapsedTime % 60).padStart(2, "0");
+    htmlTimer.textContent = `00:${seconds}`;
+  }, 1000);
+
   setTimeout(() => {
     recorder.stop();
   }, TIME_LIMIT);
