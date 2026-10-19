@@ -1,4 +1,8 @@
 // retrieved from https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API/Using_the_MediaStream_Recording_API
+
+// git command "git commit -a -m '191026'"
+// git push origin main
+
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
   console.log("getUserMedia supported.");
   navigator.mediaDevices
@@ -22,7 +26,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
 const TIME_LIMIT = 15000; // 15 seconds
 
-const recorder = new MediaRecorder(stream);
+const recorder = new MediaRecorder(await navigator.mediaDevices.getUserMedia({ audio: true }));
 
 recorder.onstart = (e) => {
   console.log("recorder started");
@@ -52,7 +56,6 @@ recorder.onstop = (e) => {
 
   const audioBlob = new Blob(audioChunks, { type: "audio/mp3" });
   const audioUrl = URL.createObjectURL(audioBlob);
-  const audio = new Audio(audioUrl);
-  audio.play();
+  audioElement.src = audioUrl;
 }; 
 
